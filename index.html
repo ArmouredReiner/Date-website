@@ -931,9 +931,13 @@
 
   <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">♫ OFF</button>
 
-  <!-- YouTube Players (replaced by YouTube IFrame API) -->
-  <div id="youtubePlayer"></div>
-  <div id="victoryPlayer"></div>
+  <!-- Audio Players -->
+  <audio id="bgMusic" loop>
+    <source src="mario-theme.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="victoryMusic">
+    <source src="victory-song.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- Main Card -->
   <div class="card">
@@ -1033,61 +1037,6 @@
   </div>
 
   <script>
-    // YouTube IFrame API - MUST be defined before the API script loads
-    let ytPlayer = null;
-    let victoryYtPlayer = null;
-    let isPlayerReady = false;
-    let isVictoryPlayerReady = false;
-
-    window.onYouTubeIframeAPIReady = function() {
-      // Create background music player
-      ytPlayer = new YT.Player('youtubePlayer', {
-        height: '1',
-        width: '1',
-        videoId: 'NTa6Xbzfq1U',
-        playerVars: {
-          autoplay: 0,
-          loop: 1,
-          playlist: 'NTa6Xbzfq1U',
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1
-        },
-        events: {
-          onReady: function(event) {
-            isPlayerReady = true;
-            event.target.setVolume(50);
-          }
-        }
-      });
-
-      // Create victory music player
-      victoryYtPlayer = new YT.Player('victoryPlayer', {
-        height: '1',
-        width: '1',
-        videoId: '3BsBXp6VkvU',
-        playerVars: {
-          autoplay: 0,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1
-        },
-        events: {
-          onReady: function(event) {
-            isVictoryPlayerReady = true;
-            event.target.setVolume(70);
-          }
-        }
-      });
-    };
-
-    // Load the YouTube IFrame API script
-    const ytScript = document.createElement('script');
-    ytScript.src = 'https://www.youtube.com/iframe_api';
-    document.head.appendChild(ytScript);
-
     // Create sparkles
     const sparkleContainer = document.getElementById('sparkleContainer');
     for (let i = 0; i < 50; i++) {
@@ -1456,18 +1405,17 @@
 
     function toggleMusic() {
       const btn = document.getElementById('musicBtn');
-      const player = document.getElementById('youtubePlayer');
+      const bgMusic = document.getElementById('bgMusic');
       if (!isPlaying) {
         isPlaying = true;
         btn.textContent = '♫ ON';
         btn.classList.add('playing');
-        // Loop the Mario theme using YouTube embed
-        player.src = `https://www.youtube.com/embed/${MARIO_THEME_VIDEO_ID}?autoplay=1&loop=1&playlist=${MARIO_THEME_VIDEO_ID}`;
+        bgMusic.play();
       } else {
         isPlaying = false;
         btn.textContent = '♫ OFF';
         btn.classList.remove('playing');
-        player.src = '';
+        bgMusic.pause();
       }
     }
 
@@ -1646,14 +1594,15 @@
     }
 
     function playVictoryFanfare() {
-      const victoryPlayer = document.getElementById('victoryPlayer');
+      const bgMusic = document.getElementById('bgMusic');
+      const victoryMusic = document.getElementById('victoryMusic');
       // Stop background music first
       if (isPlaying) {
-        const bgPlayer = document.getElementById('youtubePlayer');
-        bgPlayer.src = '';
+        bgMusic.pause();
+        bgMusic.currentTime = 0;
       }
-      // Play victory music using YouTube embed
-      victoryPlayer.src = `https://www.youtube.com/embed/${VICTORY_VIDEO_ID}?autoplay=1`;
+      // Play victory music
+      victoryMusic.play();
     }
 
     // No button messages
