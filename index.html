@@ -1410,19 +1410,109 @@
 
     function toggleMusic() {
       const btn = document.getElementById('musicBtn');
-      const iframe = document.getElementById('youtubePlayer');
       if (!isPlaying) {
-        // Pokemon Theme music - XY animated series opening
-        iframe.src = "https://www.youtube.com/embed/JBzsbBleGME?autoplay=1&loop=1&playlist=JBzsbBleGME";
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
         isPlaying = true;
         btn.textContent = '♫ ON';
         btn.classList.add('playing');
+        playPokemonTheme();
+        melodyInterval = setInterval(playPokemonTheme, 8000);
       } else {
-        iframe.src = "";
         isPlaying = false;
         btn.textContent = '♫ OFF';
         btn.classList.remove('playing');
+        clearInterval(melodyInterval);
       }
+    }
+
+    // Pokemon Theme melody using Web Audio API
+    function playPokemonNote(frequency, duration, startTime, volume = 0.15) {
+      if (!audioContext) return;
+
+      // Square wave for retro game sound
+      const osc = audioContext.createOscillator();
+      const gain = audioContext.createGain();
+
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(frequency, startTime);
+
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(volume, startTime + 0.01);
+      gain.gain.setValueAtTime(volume * 0.8, startTime + duration * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.9);
+
+      osc.connect(gain);
+      gain.connect(audioContext.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + duration + 0.1);
+    }
+
+    // Pokemon Theme melody
+    function playPokemonTheme() {
+      if (!audioContext || !isPlaying) return;
+      let time = audioContext.currentTime;
+
+      // Pokemon Theme - G5 opening, then bass line and melody
+      const melody = [
+        // Opening fanfare - G5
+        { freq: 783.99, duration: 0.2 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 0, duration: 0.1 }, // rest
+        { freq: 783.99, duration: 0.15 },
+        { freq: 659.25, duration: 0.15 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 0, duration: 0.1 },
+        { freq: 880.00, duration: 0.3 },
+        { freq: 0, duration: 0.2 },
+
+        // Bass line
+        { freq: 196.00, duration: 0.2 },
+        { freq: 220.00, duration: 0.2 },
+        { freq: 246.94, duration: 0.2 },
+        { freq: 261.63, duration: 0.2 },
+
+        // Main melody phrase
+        { freq: 392.00, duration: 0.15 },
+        { freq: 440.00, duration: 0.15 },
+        { freq: 494.00, duration: 0.15 },
+        { freq: 523.25, duration: 0.15 },
+        { freq: 587.33, duration: 0.15 },
+        { freq: 523.25, duration: 0.15 },
+        { freq: 494.00, duration: 0.15 },
+        { freq: 440.00, duration: 0.15 },
+
+        // Second phrase
+        { freq: 392.00, duration: 0.15 },
+        { freq: 349.23, duration: 0.15 },
+        { freq: 392.00, duration: 0.15 },
+        { freq: 440.00, duration: 0.3 },
+        { freq: 392.00, duration: 0.2 },
+
+        // Repeat fanfare
+        { freq: 783.99, duration: 0.2 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 0, duration: 0.1 },
+        { freq: 783.99, duration: 0.15 },
+        { freq: 659.25, duration: 0.15 },
+        { freq: 783.99, duration: 0.2 },
+        { freq: 0, duration: 0.1 },
+        { freq: 880.00, duration: 0.3 },
+
+        // Final chord
+        { freq: 523.25, duration: 0.5 },
+        { freq: 659.25, duration: 0.5 },
+        { freq: 783.99, duration: 0.5 },
+      ];
+
+      melody.forEach(({ freq, duration }) => {
+        if (freq > 0) {
+          playPokemonNote(freq, duration, time, 0.12);
+        }
+        time += duration;
+      });
     }
 
     // Trumpet-like victory fanfare
