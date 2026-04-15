@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine? 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      image-rendering: pixelated;
+    }
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      min-height: 100vh;
+      background: linear-gradient(180deg, #ffe4ec 0%, #ffd9e3 30%, #ffcfd9 50%, #ffb6c1 75%, #ff9eb5 100%);
+      overflow: hidden;
+      position: relative;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+
+    /* Dynamic Pink Background Orbs */
+    .bg-orbs {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      opacity: 0.5;
+      animation: orbFloat 10s ease-in-out infinite;
+    }
+
+    .orb-1 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #ff69b4 0%, #ff1493 50%, transparent 70%);
+      top: -100px;
+      left: -100px;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, #ffb6c1 0%, #ff69b4 50%, transparent 70%);
+      top: 20%;
+      right: -80px;
+      animation-delay: 2s;
+      animation-duration: 12s;
+    }
+
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, #ffc0cb 0%, #ff69b4 50%, transparent 70%);
+      bottom: 10%;
+      left: 20%;
+      animation-delay: 4s;
+      animation-duration: 14s;
+    }
+
+    .orb-4 {
+      width: 250px;
+      height: 250px;
+      background: radial-gradient(circle, #ff1493 0%, #ff69b4 50%, transparent 70%);
+      bottom: -50px;
+      right: 10%;
+      animation-delay: 6s;
+      animation-duration: 11s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.4;
+      }
+      25% {
+        transform: translate(30px, -30px) scale(1.1);
+        opacity: 0.6;
+      }
+      50% {
+        transform: translate(-20px, 20px) scale(0.95);
+        opacity: 0.5;
+      }
+      75% {
+        transform: translate(20px, 30px) scale(1.05);
+        opacity: 0.55;
+      }
+    }
+
+    @keyframes bgPulse {
+      0%, 100% {
+        background: linear-gradient(180deg, #ffe4ec 0%, #ffd9e3 30%, #ffcfd9 50%, #ffb6c1 75%, #ff9eb5 100%);
+        filter: saturate(1);
+      }
+      50% {
+        background: linear-gradient(180deg, #fff0f5 0%, #ffe4ec 25%, #ffd9e3 50%, #ffc4d1 75%, #ffb6c1 100%);
+        filter: saturate(1.3);
+      }
+    }
+
+    /* Sparkle rain background */
+    .sparkle-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .sparkle-bg {
+      position: absolute;
+      background: radial-gradient(circle, #fff 0%, #ffd1dc 50%, transparent 70%);
+      border-radius: 50%;
+      animation: sparkleFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes sparkleFloat {
+      0%, 100% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.5) rotate(180deg); }
+    }
+
+    /* Rainbow gradient overlay */
+    .rainbow-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg,
+        rgba(255,182,193,0.3) 0%,
+        rgba(255,105,180,0.2) 25%,
+        rgba(255,182,193,0.3) 50%,
+        rgba(255,105,180,0.2) 75%,
+        rgba(255,182,193,0.3) 100%
+      );
+      z-index: 1;
+      pointer-events: none;
+      animation: rainbowShift 5s ease-in-out infinite;
+    }
+
+    @keyframes rainbowShift {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Beautiful clouds */
+    .cloud {
+      position: fixed;
+      background: linear-gradient(180deg, #fff 0%, #fff5f7 100%);
+      z-index: 2;
+      border-radius: 50%;
+      box-shadow: 0 10px 30px rgba(255,182,193,0.3);
+    }
+
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      background: linear-gradient(180deg, #fff 0%, #fff5f7 100%);
+      border-radius: 50%;
+    }
+
+    .cloud-1 { width: 160px; height: 60px; top: 6%; left: -200px; animation: cloudFloat 45s linear infinite; }
+    .cloud-1::before { width: 80px; height: 80px; top: -40px; left: 30px; }
+    .cloud-1::after { width: 65px; height: 65px; top: -28px; left: 85px; }
+
+    .cloud-2 { width: 140px; height: 55px; top: 14%; left: -180px; animation: cloudFloat 50s linear infinite; animation-delay: 8s; }
+    .cloud-2::before { width: 70px; height: 70px; top: -35px; left: 25px; }
+    .cloud-2::after { width: 55px; height: 55px; top: -22px; left: 70px; }
+
+    .cloud-3 { width: 120px; height: 50px; top: 10%; left: -160px; animation: cloudFloat 55s linear infinite; animation-delay: 15s; }
+    .cloud-3::before { width: 60px; height: 60px; top: -30px; left: 18px; }
+    .cloud-3::after { width: 48px; height: 48px; top: -18px; left: 60px; }
+
+    .cloud-4 { width: 150px; height: 58px; top: 22%; left: -190px; animation: cloudFloat 48s linear infinite; animation-delay: 22s; }
+    .cloud-4::before { width: 75px; height: 75px; top: -38px; left: 28px; }
+    .cloud-4::after { width: 58px; height: 58px; top: -25px; left: 78px; }
+
+    .cloud-5 { width: 130px; height: 52px; top: 18%; left: -170px; animation: cloudFloat 52s linear infinite; animation-delay: 5s; }
+    .cloud-5::before { width: 65px; height: 65px; top: -32px; left: 22px; }
+    .cloud-5::after { width: 52px; height: 52px; top: -20px; left: 65px; }
+
+    .cloud-6 { width: 110px; height: 48px; top: 8%; left: -150px; animation: cloudFloat 58s linear infinite; animation-delay: 30s; }
+    .cloud-6::before { width: 55px; height: 55px; top: -28px; left: 15px; }
+    .cloud-6::after { width: 45px; height: 45px; top: -16px; left: 55px; }
+
+    @keyframes cloudFloat {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(100vw + 300px)); }
+    }
+
+    /* Flowing Grass */
+    .grass-area {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .grass-blade {
+      position: absolute;
+      bottom: 0;
+      width: 8px;
+      border-radius: 50% 50% 0 0;
+      background: linear-gradient(to top, #228b22, #32cd32, #90ee90);
+      transform-origin: bottom center;
+    }
+
+    @keyframes grassSway {
+      0%, 100% { transform: rotate(-5deg) scaleY(1); }
+      50% { transform: rotate(5deg) scaleY(1.05); }
+    }
+
+    /* Shimmer ground */
+    .ground-shimmer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: linear-gradient(to top, #228b22, #2e8b2e, #3cb043);
+      z-index: 9;
+      box-shadow: 0 -5px 20px rgba(144, 238, 144, 0.5);
+    }
+
+    /* Scanlines */
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 600;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+    }
+
+    /* Big Sparkle Stars */
+    .big-sparkle {
+      position: fixed;
+      font-size: 30px;
+      z-index: 5;
+      animation: twinkleStar 2s ease-in-out infinite;
+    }
+
+    @keyframes twinkleStar {
+      0%, 100% { opacity: 0.4; transform: scale(1) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.3) rotate(20deg); }
+    }
+
+    /* Pixel Boy Character */
+    .pixel-boy {
+      position: fixed;
+      bottom: 150px;
+      left: 10%;
+      z-index: 50;
+      transition: all 0.4s ease;
+    }
+
+    .pixel-boy.sad {
+      animation: sadShake 0.5s ease-in-out infinite;
+    }
+
+    .pixel-boy.happy {
+      animation: happyBounce 0.3s ease-in-out infinite;
+    }
+
+    @keyframes sadShake {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      25% { transform: translateX(-5px) translateY(3px); }
+      75% { transform: translateX(5px) translateY(3px); }
+    }
+
+    @keyframes happyBounce {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    .boy-face {
+      position: relative;
+      width: 20px;
+      height: 20px;
+      transform: scale(5.5);
+      transform-origin: center;
+    }
+
+    /* Hair */
+    .hair {
+      position: absolute;
+      top: -2px;
+      left: 0;
+      width: 20px;
+      height: 8px;
+      background: #8b4513;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .hair::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 0;
+      width: 4px;
+      height: 8px;
+      background: #8b4513;
+      border-radius: 0 0 2px 2px;
+    }
+
+    /* Face */
+    .face {
+      position: absolute;
+      top: 6px;
+      left: 0;
+      width: 20px;
+      height: 14px;
+      background: #ffe4c4;
+      border-radius: 4px;
+    }
+
+    /* Eyes - Neutral */
+    .eyes {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 20px;
+      height: 6px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 2px;
+    }
+
+    .eye {
+      width: 5px;
+      height: 5px;
+      background: #333;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    /* Sad eyes - looking down, tear */
+    .eyes.sad .eye {
+      height: 3px;
+      border-radius: 2px;
+      transform: translateY(2px);
+    }
+
+    /* Happy eyes - big sparkly */
+    .eyes.happy .eye {
+      width: 6px;
+      height: 6px;
+      background: #333;
+      box-shadow: 0 0 0 2px #fff;
+    }
+
+    .eyes.happy .eye::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    /* Blush */
+    .blush {
+      position: absolute;
+      top: 14px;
+      width: 4px;
+      height: 2px;
+      background: #ffb6c1;
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .blush.left { left: 1px; }
+    .blush.right { right: 1px; }
+
+    .eyes.happy ~ .blush {
+      opacity: 1;
+    }
+
+    /* Mouth - Neutral */
+    .mouth {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 2px;
+      background: #ff6b6b;
+      border-radius: 0 0 2px 2px;
+      transition: all 0.3s ease;
+    }
+
+    /* Sad mouth */
+    .mouth.sad {
+      width: 6px;
+      height: 2px;
+      background: #ff6b6b;
+      border-radius: 2px;
+      transform: translateX(-50%) translateY(2px);
+    }
+
+    /* Huge Happy Smile */
+    .mouth.happy {
+      width: 10px;
+      height: 6px;
+      background: #ff6b6b;
+      border-radius: 0 0 10px 10px;
+      transform: translateX(-50%);
+      box-shadow: 0 -1px 0 #cc5555;
+    }
+
+    /* Body */
+    .body {
+      position: absolute;
+      top: 20px;
+      left: 0;
+      width: 20px;
+      height: 14px;
+      background: #ff69b4;
+      border-radius: 4px;
+    }
+
+    .body::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 6px;
+      height: 4px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    /* Arms */
+    .arm {
+      position: absolute;
+      top: 22px;
+      width: 5px;
+      height: 12px;
+      background: #ffe4c4;
+      border-radius: 3px;
+    }
+
+    .arm.left { left: -5px; }
+    .arm.right { right: -5px; transition: transform 0.3s; }
+
+    .arm.right.holding {
+      transform: rotate(-60deg);
+      transform-origin: top center;
+    }
+
+    /* Legs */
+    .legs {
+      position: absolute;
+      top: 34px;
+      left: 2px;
+      width: 16px;
+      height: 8px;
+      background: #4169e1;
+      border-radius: 0 0 4px 4px;
+    }
+
+    .legs::before, .legs::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      width: 6px;
+      height: 4px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    .legs::before { left: 0; }
+    .legs::after { right: 0; }
+
+    /* Cake held */
+    .cake-held {
+      display: none;
+      position: absolute;
+      top: -5px;
+      left: 55px;
+      transform: scale(2.8);
+    }
+
+    .pixel-boy.happy .cake-held {
+      display: block;
+      animation: cakeAppear 0.4s ease-out;
+    }
+
+    @keyframes cakeAppear {
+      from { transform: scale(2.8) translateY(20px); opacity: 0; }
+      to { transform: scale(2.8) translateY(0); opacity: 1; }
+    }
+
+    /* Bigger cake for victory screen */
+    .cake-held-victory .cake {
+      transform: scale(4);
+    }
+
+    .cake {
+      position: relative;
+    }
+
+    .cake-base {
+      width: 20px;
+      height: 12px;
+      background: linear-gradient(180deg, #ffc0cb 0%, #ffb6c1 50%, #ff69b4 100%);
+      border: 2px solid #ff1493;
+      border-radius: 4px;
+      box-shadow: inset -3px -3px 0 rgba(0,0,0,0.1);
+    }
+
+    .cake-top {
+      position: absolute;
+      bottom: 12px;
+      left: 3px;
+      width: 14px;
+      height: 8px;
+      background: linear-gradient(180deg, #ffc0cb 0%, #ff69b4 100%);
+      border: 2px solid #ff1493;
+      border-radius: 4px 4px 0 0;
+    }
+
+    .cake-frosting {
+      position: absolute;
+      bottom: 18px;
+      left: 1px;
+      width: 18px;
+      height: 4px;
+      background: white;
+      border-radius: 4px;
+    }
+
+    .cake-cherry {
+      position: absolute;
+      bottom: 22px;
+      left: 8px;
+      width: 5px;
+      height: 5px;
+      background: #ff0000;
+      border-radius: 50%;
+    }
+
+    .cake-cherry::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 2px;
+      width: 2px;
+      height: 4px;
+      background: #228b22;
+      border-radius: 2px;
+    }
+
+    /* Speech Bubble */
+    .speech-bubble {
+      position: fixed;
+      bottom: 280px;
+      left: 10%;
+      z-index: 60;
+      background: white;
+      border: 4px solid #ff69b4;
+      border-radius: 20px;
+      padding: 15px 25px;
+      font-size: 0.55rem;
+      color: #ff1493;
+      text-align: center;
+      box-shadow:
+        0 5px 20px rgba(255,105,180,0.4),
+        inset 0 2px 0 rgba(255,255,255,0.5);
+      max-width: 300px;
+      line-height: 2;
+      animation: bubbleFloat 2s ease-in-out infinite;
+    }
+
+    @keyframes bubbleFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 40px;
+      border: 12px solid transparent;
+      border-top-color: #ff69b4;
+    }
+
+    .speech-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 40px;
+      border: 10px solid transparent;
+      border-top-color: white;
+      z-index: 1;
+    }
+
+    /* Main Card */
+    .card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 100;
+      background: linear-gradient(145deg, #fff5f7 0%, #ffe4ec 100%);
+      border: 5px solid #ff69b4;
+      border-radius: 25px;
+      padding: 40px 50px;
+      text-align: center;
+      max-width: 500px;
+      width: 92%;
+      box-shadow:
+        0 15px 50px rgba(255,105,180,0.4),
+        0 5px 20px rgba(255,105,180,0.2),
+        inset 0 2px 0 rgba(255,255,255,0.8);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: -3px;
+      right: -3px;
+      bottom: -3px;
+      border: 3px solid #ffb6c1;
+      border-radius: 28px;
+      pointer-events: none;
+    }
+
+    /* Glitter heart */
+    .glitter-heart {
+      display: inline-block;
+      font-size: 60px;
+      margin-bottom: 20px;
+      animation: heartGlow 1s ease-in-out infinite;
+      filter: drop-shadow(0 0 15px rgba(255,105,180,0.8));
+    }
+
+    @keyframes heartGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(255,105,180,0.8)); }
+      50% { transform: scale(1.1); filter: drop-shadow(0 0 30px rgba(255,105,180,1)); }
+    }
+
+    .title {
+      font-size: 0.8rem;
+      color: #ff1493;
+      margin-bottom: 15px;
+      line-height: 2;
+      text-shadow: 2px 2px 0 rgba(255,105,180,0.3);
+    }
+
+    .subtitle {
+      font-size: 0.5rem;
+      color: #ff69b4;
+      margin-bottom: 30px;
+      line-height: 1.8;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.6rem;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+
+    .btn-yes {
+      background: linear-gradient(145deg, #ff69b4 0%, #ff1493 100%);
+      color: white;
+      box-shadow:
+        0 6px 20px rgba(255,20,147,0.4),
+        0 3px 10px rgba(255,105,180,0.3),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow:
+        0 10px 30px rgba(255,20,147,0.5),
+        0 5px 15px rgba(255,105,180,0.4);
+    }
+
+    .btn-yes:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-no {
+      background: linear-gradient(145deg, #d3d3d3 0%, #a9a9a9 100%);
+      color: #666;
+      box-shadow:
+        0 6px 20px rgba(0,0,0,0.15),
+        inset 0 2px 0 rgba(255,255,255,0.3);
+    }
+
+    .btn-no:hover {
+      transform: translateY(-2px);
+    }
+
+    .no-message {
+      margin-top: 25px;
+      font-size: 0.45rem;
+      color: #ff1493;
+      min-height: 30px;
+      line-height: 2;
+      text-shadow: 1px 1px 0 rgba(255,105,180,0.3);
+    }
+
+    /* Music Toggle */
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 700;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.45rem;
+      padding: 12px 16px;
+      background: linear-gradient(145deg, #ff69b4 0%, #ff1493 100%);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(255,20,147,0.4);
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    /* Success Screen */
+    .success-screen {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 500;
+      background: linear-gradient(180deg, #fff0f5 0%, #ffe4ec 50%, #ffd9e3 100%);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      animation: bgPulse 8s ease-in-out infinite;
+    }
+
+    .success-screen.active {
+      display: flex;
+    }
+
+    /* Floating hearts animation */
+    .hearts-rain {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      font-size: 30px;
+      animation: heartFloatUp 4s ease-out forwards;
+    }
+
+    @keyframes heartFloatUp {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Decorative sparkles */
+    .deco-sparkle {
+      position: absolute;
+      font-size: 40px;
+      animation: sparkleSpin 2s linear infinite;
+    }
+
+    @keyframes sparkleSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Success Content */
+    .success-content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      animation: successAppear 0.6s ease-out;
+    }
+
+    @keyframes successAppear {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .happy-boy-area {
+      flex-shrink: 0;
+    }
+
+    .success-text-area {
+      text-align: center;
+    }
+
+    .success-box {
+      background: white;
+      border: 5px solid #ff69b4;
+      border-radius: 25px;
+      padding: 35px 45px;
+      box-shadow: 0 15px 50px rgba(255,105,180,0.4);
+    }
+
+    .success-heart {
+      font-size: 50px;
+      display: block;
+      margin-bottom: 15px;
+      animation: heartGlow 1s ease-in-out infinite;
+    }
+
+    .success-title {
+      font-size: 0.75rem;
+      color: #ff1493;
+      margin-bottom: 15px;
+      line-height: 2;
+      text-shadow: 2px 2px 0 rgba(255,105,180,0.3);
+    }
+
+    .success-subtitle {
+      font-size: 0.5rem;
+      color: #ff69b4;
+      line-height: 2;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      animation: confettiFall 3s ease-out forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 30px 25px; }
+      .title { font-size: 0.6rem; }
+      .btn { font-size: 0.5rem; padding: 14px 24px; }
+      .speech-bubble { font-size: 0.45rem; padding: 12px 18px; max-width: 240px; }
+      .boy-face { transform: scale(4.5); }
+      .success-content { flex-direction: column; gap: 25px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scanlines"></div>
+
+  <!-- Dynamic Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+  </div>
+
+  <!-- Sparkle Background -->
+  <div class="sparkle-container" id="sparkleContainer"></div>
+  <div class="rainbow-overlay"></div>
+
+  <!-- Big Sparkle Stars -->
+  <div class="big-sparkle" style="top: 10%; left: 5%; animation-delay: 0s;">✨</div>
+  <div class="big-sparkle" style="top: 15%; right: 10%; animation-delay: 0.5s;">⭐</div>
+  <div class="big-sparkle" style="top: 25%; left: 15%; animation-delay: 1s;">💫</div>
+  <div class="big-sparkle" style="top: 20%; right: 20%; animation-delay: 1.5s;">✨</div>
+  <div class="big-sparkle" style="bottom: 30%; left: 8%; animation-delay: 0.3s;">⭐</div>
+  <div class="big-sparkle" style="bottom: 25%; right: 12%; animation-delay: 0.8s;">💫</div>
+
+  <!-- Clouds -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="cloud cloud-5"></div>
+  <div class="cloud cloud-6"></div>
+
+  <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">♫ OFF</button>
+
+  <!-- YouTube Background Music (hidden) -->
+  <iframe id="youtubePlayer" width="1" height="1" style="position: absolute; opacity: 0;" 
+    src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
+  <!-- Main Card -->
+  <div class="card">
+    <div class="glitter-heart">💖</div>
+    <h1 class="title">Will You Be My Valentine?</h1>
+    <p class="subtitle">I have something special to ask you...</p>
+    <div class="buttons">
+      <button class="btn btn-yes" onclick="showSuccess()">YES 💕</button>
+      <button class="btn btn-no" id="noBtn" onclick="handleNoClick()">NO</button>
+    </div>
+    <p class="no-message" id="noMessage"></p>
+  </div>
+
+  <!-- Speech Bubble -->
+  <div class="speech-bubble" id="speechBubble">
+    Be my Valentine? 💝
+  </div>
+
+  <!-- Pixel Boy -->
+  <div class="pixel-boy" id="pixelBoy">
+    <div class="boy-face">
+      <div class="hair"></div>
+      <div class="face"></div>
+      <div class="eyes normal" id="eyes">
+        <div class="eye left"></div>
+        <div class="eye right"></div>
+        <div class="blush left"></div>
+        <div class="blush right"></div>
+      </div>
+      <div class="mouth" id="mouth"></div>
+      <div class="body"></div>
+      <div class="arm left"></div>
+      <div class="arm right" id="rightArm"></div>
+      <div class="legs"></div>
+      <div class="cake-held" id="cakeHeld">
+        <div class="cake">
+          <div class="cake-base"></div>
+          <div class="cake-top"></div>
+          <div class="cake-frosting"></div>
+          <div class="cake-cherry"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grass -->
+  <div class="grass-area" id="grassArea"></div>
+  <div class="ground-shimmer"></div>
+
+  <!-- Success Screen -->
+  <div class="success-screen" id="successScreen">
+    <div class="hearts-rain" id="heartsRain"></div>
+
+    <!-- Decorative sparkles -->
+    <div class="deco-sparkle" style="top: 10%; left: 15%; animation-delay: 0s;">✨</div>
+    <div class="deco-sparkle" style="top: 15%; right: 20%; animation-delay: 0.5s;">⭐</div>
+    <div class="deco-sparkle" style="bottom: 20%; left: 10%; animation-delay: 1s;">💫</div>
+    <div class="deco-sparkle" style="bottom: 15%; right: 15%; animation-delay: 1.5s;">✨</div>
+
+    <div class="success-content">
+      <!-- Happy Boy with Cake -->
+      <div class="happy-boy-area" style="position: relative; z-index: 10; margin-right: 60px;">
+        <div class="boy-face" style="transform: scale(4.5); position: relative;">
+          <div class="hair"></div>
+          <div class="face"></div>
+          <div class="eyes happy">
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+          </div>
+          <div class="mouth happy"></div>
+          <div class="body"></div>
+          <div class="arm left" style="transform: rotate(-30deg);"></div>
+          <div class="arm right" style="transform: rotate(-60deg);"></div>
+          <div class="legs"></div>
+        </div>
+        <!-- Cake in boy's hands -->
+        <div class="cake-held-victory" style="position: absolute; bottom: 50px; left: 55px; z-index: 20;">
+          <div class="cake">
+            <div class="cake-base"></div>
+            <div class="cake-top"></div>
+            <div class="cake-frosting"></div>
+            <div class="cake-cherry"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Only - Clearly visible -->
+      <div class="success-text-area" style="flex: 1; max-width: 400px;">
+        <div class="success-box">
+          <span class="success-heart">💕</span>
+          <p class="success-title">I KNEW YOU'D SAY YES!</p>
+          <p class="success-subtitle">Here's a cake for you! 🎂</p>
+          <p class="success-subtitle" style="margin-top: 15px;">Happy Valentine's Day! 💖</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create sparkles
+    const sparkleContainer = document.getElementById('sparkleContainer');
+    for (let i = 0; i < 50; i++) {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle-bg';
+      sparkle.style.left = `${Math.random() * 100}%`;
+      sparkle.style.top = `${Math.random() * 100}%`;
+      sparkle.style.width = `${Math.random() * 6 + 2}px`;
+      sparkle.style.height = sparkle.style.width;
+      sparkle.style.animationDelay = `${Math.random() * 3}s`;
+      sparkle.style.animationDuration = `${Math.random() * 2 + 2}s`;
+      sparkleContainer.appendChild(sparkle);
+    }
+
+    // Create flowing grass
+    const grassArea = document.getElementById('grassArea');
+    for (let i = 0; i < 150; i++) {
+      const blade = document.createElement('div');
+      blade.className = 'grass-blade';
+      blade.style.left = `${(i / 150) * 100}%`;
+      blade.style.height = `${Math.random() * 40 + 30}px`;
+      blade.style.animation = `grassSway ${Math.random() * 1 + 1.5}s ease-in-out infinite`;
+      blade.style.animationDelay = `${Math.random() * 0.5}s`;
+      grassArea.appendChild(blade);
+    }
+
+    // Perfect - Ed Sheeran (musical instrumental version)
+    let audioContext = null;
+    let isPlaying = false;
+    let melodyInterval = null;
+
+    const notes = {
+      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00,
+      A4: 440.00, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, G5: 784.00,
+      G3: 196.00, A3: 220.00, B3: 246.94, E3: 164.81, F3: 174.61, D3: 146.83
+    };
+
+    // Perfect - Ed Sheeran (musical instrumental version)
+
+    // Realistic Piano sound using additive synthesis
+    function createPianoNote(frequency, duration, startTime, volume = 0.2) {
+      if (!audioContext) return;
+
+      // Piano harmonic series - real piano has complex overtone structure
+      const harmonics = [
+        { freq: 1, vol: 0.30 },   // fundamental
+        { freq: 2, vol: 0.18 },   // 2nd harmonic
+        { freq: 3, vol: 0.12 },   // 3rd harmonic
+        { freq: 4, vol: 0.08 },   // 4th harmonic
+        { freq: 5, vol: 0.06 },   // 5th harmonic
+        { freq: 6, vol: 0.04 },   // 6th harmonic
+        { freq: 7, vol: 0.03 },   // 7th harmonic
+        { freq: 8, vol: 0.02 },   // 8th harmonic
+        { freq: 9, vol: 0.015 },  // 9th harmonic
+        { freq: 10, vol: 0.01 },  // 10th harmonic
+        { freq: 12, vol: 0.008 }, // 12th harmonic
+        { freq: 15, vol: 0.005 }, // 15th harmonic
+      ];
+
+      harmonics.forEach(({ freq, vol }, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        // Use mixed oscillator types for richer sound
+        if (i === 0) {
+          osc.type = 'sine'; // fundamental - pure sine
+        } else if (i < 4) {
+          osc.type = 'sine'; // lower harmonics - sine for warmth
+        } else {
+          osc.type = 'triangle'; // higher harmonics - triangle for brightness
+        }
+
+        osc.frequency.setValueAtTime(frequency * freq, startTime);
+
+        // Slight detune for warmth (avoid perfect unison)
+        osc.detune.setValueAtTime(Math.random() * 4 - 2, startTime);
+
+        // Realistic piano envelope: fast attack, sustain, then decay
+        gain.gain.setValueAtTime(0, startTime);
+        // Tiny bit of pre-delay for natural feel
+        gain.gain.linearRampToValueAtTime(vol * volume, startTime + 0.008);
+        // Quick attack to peak
+        gain.gain.linearRampToValueAtTime(vol * volume * 0.7, startTime + 0.02);
+        // Sustain then long decay
+        gain.gain.exponentialRampToValueAtTime(vol * volume * 0.001, startTime + duration * 0.95);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.1);
+      });
+
+      // Add a subtle "cabinet" warmth with low-pass filtered noise
+      const noise = audioContext.createOscillator();
+      const noiseGain = audioContext.createGain();
+      const filter = audioContext.createBiquadFilter();
+
+      noise.type = 'sawtooth';
+      noise.frequency.setValueAtTime(frequency * 0.5, startTime);
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, startTime);
+      noiseGain.gain.setValueAtTime(0, startTime);
+      noiseGain.gain.linearRampToValueAtTime(0.02 * volume, startTime + 0.01);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.3);
+
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(audioContext.destination);
+      noise.start(startTime);
+      noise.stop(startTime + duration * 0.5);
+    }
+
+    // Realistic Guitar sound using Karplus-Strong-like synthesis
+    function createGuitarStrum(chord, duration, startTime, volume = 0.08) {
+      if (!audioContext) return;
+
+      chord.forEach((freq, i) => {
+        const delay = i * 0.018; // Strum timing
+
+        // Each string has body (fundamental) + harmonics
+        const fundamental = audioContext.createOscillator();
+        const harm2 = audioContext.createOscillator();
+        const harm3 = audioContext.createOscillator();
+        const stringNoise = audioContext.createOscillator();
+
+        const fundGain = audioContext.createGain();
+        const harm2Gain = audioContext.createGain();
+        const harm3Gain = audioContext.createGain();
+        const noiseGain = audioContext.createGain();
+
+        const bodyFilter = audioContext.createBiquadFilter();
+
+        // Fundamental - warm nylon string sound
+        fundamental.type = 'triangle';
+        fundamental.frequency.setValueAtTime(freq, startTime + delay);
+        fundGain.gain.setValueAtTime(0, startTime + delay);
+        fundGain.gain.linearRampToValueAtTime(volume, startTime + delay + 0.005);
+        fundGain.gain.exponentialRampToValueAtTime(volume * 0.4, startTime + delay + 0.1);
+        fundGain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+        // 2nd harmonic - gives string definition
+        harm2.type = 'sine';
+        harm2.frequency.setValueAtTime(freq * 2, startTime + delay);
+        harm2Gain.gain.setValueAtTime(0, startTime + delay);
+        harm2Gain.gain.linearRampToValueAtTime(volume * 0.3, startTime + delay + 0.003);
+        harm2Gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.6);
+
+        // 3rd harmonic - adds presence
+        harm3.type = 'sine';
+        harm3.frequency.setValueAtTime(freq * 3, startTime + delay);
+        harm3Gain.gain.setValueAtTime(0, startTime + delay);
+        harm3Gain.gain.linearRampToValueAtTime(volume * 0.15, startTime + delay + 0.002);
+        harm3Gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.4);
+
+        // String attack noise (pluck sound)
+        stringNoise.type = 'sawtooth';
+        stringNoise.frequency.setValueAtTime(freq * 4, startTime + delay);
+        bodyFilter.type = 'bandpass';
+        bodyFilter.frequency.setValueAtTime(2000, startTime + delay);
+        bodyFilter.Q.setValueAtTime(1, startTime + delay);
+        noiseGain.gain.setValueAtTime(0, startTime + delay);
+        noiseGain.gain.linearRampToValueAtTime(volume * 0.5, startTime + delay + 0.002);
+        noiseGain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.05);
+
+        // Connect with body resonance filter
+        fundamental.connect(bodyFilter);
+        harm2.connect(bodyFilter);
+        harm3.connect(bodyFilter);
+        stringNoise.connect(bodyFilter);
+
+        bodyFilter.connect(fundGain);
+        bodyFilter.connect(harm2Gain);
+        bodyFilter.connect(harm3Gain);
+        bodyFilter.connect(noiseGain);
+
+        fundGain.connect(audioContext.destination);
+        harm2Gain.connect(audioContext.destination);
+        harm3Gain.connect(audioContext.destination);
+        noiseGain.connect(audioContext.destination);
+
+        fundamental.start(startTime + delay);
+        harm2.start(startTime + delay);
+        harm3.start(startTime + delay);
+        stringNoise.start(startTime + delay);
+
+        fundamental.stop(startTime + duration + 0.1);
+        harm2.stop(startTime + duration + 0.1);
+        harm3.stop(startTime + duration + 0.1);
+        stringNoise.stop(startTime + delay + 0.1);
+      });
+    }
+
+    // Romantic Piano & Guitar instrumental
+    const perfectMelody = [
+      // G major chord progression for romantic feel
+      { chord: ['G3', 'B3', 'D4', 'G4'], duration: 1.5 },
+      { chord: ['C4', 'E4', 'G4'], duration: 1.5 },
+      { chord: ['D4', 'F#4', 'A4', 'D5'], duration: 1.5 },
+      { chord: ['G3', 'B3', 'G4'], duration: 1.5 },
+
+      // Melody with piano chords
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+      { note: 'A4', duration: 0.6, chord: ['G3', 'B3', 'D4'] },
+      { note: 'B4', duration: 1.0, chord: ['C4', 'E4', 'G4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+      { note: 'E4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'D4', duration: 1.2, chord: ['D4', 'F#4', 'A4'] },
+
+      // "I found a love for me"
+      { note: 'E4', duration: 0.6, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.6, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'D4', duration: 1.0, chord: ['D4', 'F#4', 'A4'] },
+
+      // "Darling just dive right in"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+
+      // "Follow my heart into you"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.6, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'D4', duration: 1.0, chord: ['D4', 'F#4', 'A4'] },
+
+      // "I found a boy beautiful and sweet"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+
+      // "I never knew you were the one"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.6, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.5, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // "Waiting for love"
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.6, chord: ['G3', 'B3', 'D4'] },
+      { note: 'E4', duration: 1.2, chord: ['G3', 'B3', 'E4'] },
+
+      // "Yeah I've found"
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.6, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // Chord interlude
+      { chord: ['D4', 'F#4', 'A4', 'D5'], duration: 2.0 },
+
+      // "My heart just for you"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'D4', duration: 1.0, chord: ['D4', 'F#4', 'A4'] },
+
+      // "This love is easy"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+
+      // "This love was made"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // "For you and me"
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.6, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // "Just dive in"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // "And I'll be caught in"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.5, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 0.8, chord: ['G3', 'B3', 'D4'] },
+
+      // "Between these arms"
+      { note: 'E4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'G4', duration: 0.5, chord: ['G3', 'B3', 'E4'] },
+      { note: 'A4', duration: 0.8, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // "I'm covered in perfection"
+      { note: 'B4', duration: 0.6, chord: ['C4', 'E4', 'G4'] },
+      { note: 'A4', duration: 0.6, chord: ['C4', 'E4', 'A4'] },
+      { note: 'G4', duration: 1.0, chord: ['G3', 'B3', 'D4'] },
+
+      // Final section
+      { note: 'E4', duration: 0.6, chord: ['G3', 'B3', 'E4'] },
+      { note: 'D4', duration: 1.5, chord: ['D4', 'F#4', 'A4'] },
+
+      // "Perfect"
+      { note: 'E4', duration: 1.2, chord: ['G3', 'B3', 'E4'] },
+      { note: 'D4', duration: 1.0, chord: ['D4', 'F#4', 'A4'] },
+      { note: 'C4', duration: 2.0, chord: ['C4', 'E4', 'G4'] },
+    ];
+
+    function playPerfect() {
+      if (!audioContext || !isPlaying) return;
+      let time = audioContext.currentTime;
+      perfectMelody.forEach(({ note, chord, duration }) => {
+        if (chord) {
+          const chordFreqs = chord.map(n => notes[n]).filter(Boolean);
+          createGuitarStrum(chordFreqs, duration * 0.95, time, 0.08);
+        }
+        // Guitar plays melody too (higher volume for prominence)
+        if (note && notes[note]) {
+          createGuitarNote(notes[note], duration * 0.95, time, 0.18);
+        }
+        time += duration;
+      });
+    }
+
+    // Single guitar note for melody
+    function createGuitarNote(frequency, duration, startTime, volume = 0.15) {
+      if (!audioContext) return;
+
+      const harmonics = [
+        { freq: 1, vol: 0.35 },
+        { freq: 2, vol: 0.25 },
+        { freq: 3, vol: 0.15 },
+        { freq: 4, vol: 0.08 },
+        { freq: 5, vol: 0.04 }
+      ];
+
+      harmonics.forEach(({ freq, vol }, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        osc.type = i < 2 ? 'triangle' : 'sine';
+        osc.frequency.setValueAtTime(frequency * freq, startTime);
+
+        // Soft attack, sustain, gentle decay
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol * volume, startTime + 0.02);
+        gain.gain.setValueAtTime(vol * volume * 0.7, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.85);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.1);
+      });
+    }
+
+    function toggleMusic() {
+      const btn = document.getElementById('musicBtn');
+      const iframe = document.getElementById('youtubePlayer');
+      if (!isPlaying) {
+        // Load YouTube video as audio
+        iframe.src = "https://www.youtube.com/embed/VvjWl7lvrnk?autoplay=1&loop=1&playlist=VvjWl7lvrnk";
+        isPlaying = true;
+        btn.textContent = '♫ ON';
+        btn.classList.add('playing');
+      } else {
+        iframe.src = "";
+        isPlaying = false;
+        btn.textContent = '♫ OFF';
+        btn.classList.remove('playing');
+      }
+    }
+
+    // Trumpet-like victory fanfare
+    function createTrumpetNote(frequency, duration, startTime, volume = 0.2) {
+      if (!audioContext) return;
+
+      // Trumpet has bright, brassy harmonics
+      const harmonics = [
+        { freq: 1, vol: 0.40 },
+        { freq: 2, vol: 0.30 },
+        { freq: 3, vol: 0.20 },
+        { freq: 4, vol: 0.15 },
+        { freq: 5, vol: 0.10 },
+        { freq: 6, vol: 0.06 },
+        { freq: 7, vol: 0.04 },
+        { freq: 8, vol: 0.02 }
+      ];
+
+      harmonics.forEach(({ freq, vol }, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        // Trumpet uses sawtooth for brassy quality
+        osc.type = i === 0 ? 'sawtooth' : (i < 4 ? 'sawtooth' : 'square');
+        osc.frequency.setValueAtTime(frequency * freq, startTime);
+
+        // Fast attack, sustain, then decay
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol * volume, startTime + 0.02);
+        gain.gain.setValueAtTime(vol * volume * 0.85, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration * 0.9);
+
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+
+        osc.start(startTime);
+        osc.stop(startTime + duration + 0.1);
+      });
+
+      // Add vibrato for trumpet expression
+      const vibrato = audioContext.createOscillator();
+      const vibratoGain = audioContext.createGain();
+      vibrato.type = 'sine';
+      vibrato.frequency.setValueAtTime(6, startTime); // 6Hz vibrato
+      vibratoGain.gain.setValueAtTime(3, startTime); // slight pitch variation
+      vibratoGain.gain.linearRampToValueAtTime(0, startTime + duration * 0.8);
+      vibrato.connect(vibratoGain);
+      vibratoGain.connect(audioContext.destination);
+      vibrato.start(startTime);
+      vibrato.stop(startTime + duration);
+    }
+
+    function playVictoryFanfare() {
+      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const time = audioContext.currentTime;
+
+      // Triumphant fanfare melody - trumpet style
+      const fanfare = [
+        { note: 'C5', duration: 0.25 }, { note: 'E5', duration: 0.25 },
+        { note: 'G5', duration: 0.35 }, { note: 'C5', duration: 0.1 },
+        { note: 'E5', duration: 0.2 }, { note: 'G5', duration: 0.3 },
+        { note: 'C6', duration: 0.7 }, { note: null, duration: 0.15 },
+        { note: 'G5', duration: 0.3 }, { note: 'C6', duration: 0.3 },
+        { note: 'G5', duration: 0.4 }, { note: 'C6', duration: 0.6 }
+      ];
+
+      fanfare.forEach(({ note, duration }) => {
+        if (note && notes[note]) {
+          createTrumpetNote(notes[note], duration, time, 0.3);
+        }
+        time += duration;
+      });
+    }
+
+    // No button messages
+    const noMessages = [
+      "Are you really sure? 😢",
+      "Please don't say no... 🥺",
+      "I'll be really sad... 💔",
+      "But... but... 🥺💕",
+      "Are you 100% sure? 😿",
+      "I'm about to cry... 😢",
+      "Pretty please? 🥰",
+      "My heart is breaking... 💔",
+      "One more chance? 🙏",
+      "I love you! 💖"
+    ];
+
+    const speechTexts = [
+      "Be my Valentine? 💝",
+      "Please? 🥺",
+      "Don't go... 😢",
+      "I'm waiting... 💕",
+      "Please reconsider... 🥺",
+      "I'll be here... 💖",
+      "My heart... 💔",
+      "Please... 🙏",
+      "I need you! 💕",
+      "Forever? 💝"
+    ];
+
+    let noClickCount = 0;
+
+    function handleNoClick() {
+      const noBtn = document.getElementById('noBtn');
+      const msg = document.getElementById('noMessage');
+      const boy = document.getElementById('pixelBoy');
+      const eyes = document.getElementById('eyes');
+      const mouth = document.getElementById('mouth');
+      const bubble = document.getElementById('speechBubble');
+
+      // Make boy sad
+      boy.classList.remove('happy');
+      boy.classList.add('sad');
+      eyes.className = 'eyes sad';
+      mouth.className = 'mouth sad';
+
+      // Move button
+      const maxX = window.innerWidth - noBtn.offsetWidth - 40;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 180;
+      const newX = Math.max(20, Math.random() * maxX);
+      const newY = Math.max(20, Math.random() * maxY);
+
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+      noBtn.style.zIndex = '1000';
+
+      // Update messages
+      if (noClickCount < noMessages.length) {
+        msg.textContent = noMessages[noClickCount];
+        bubble.textContent = speechTexts[noClickCount];
+        noClickCount++;
+      }
+    }
+
+    function createFloatingHeart() {
+      const container = document.getElementById('heartsRain');
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.textContent = ['💖', '💕', '💗', '💝', '❤️', '💘'][Math.floor(Math.random() * 6)];
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.fontSize = `${Math.random() * 20 + 20}px`;
+      heart.style.animationDuration = `${Math.random() * 2 + 3}s`;
+      container.appendChild(heart);
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    function createConfetti() {
+      const heart = document.createElement('div');
+      heart.className = 'confetti';
+      const colors = ['#ff69b4', '#ff1493', '#ffd700', '#ff6b6b', '#87ceeb', '#98fb98'];
+      heart.style.background = colors[Math.floor(Math.random() * colors.length)];
+      heart.style.left = `${Math.random() * 100}%`;
+      heart.style.top = '-20px';
+      heart.style.animationDuration = `${Math.random() * 2 + 2}s`;
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 4000);
+    }
+
+    function showSuccess() {
+      const boy = document.getElementById('pixelBoy');
+      const eyes = document.getElementById('eyes');
+      const mouth = document.getElementById('mouth');
+      const rightArm = document.getElementById('rightArm');
+      const successScreen = document.getElementById('successScreen');
+
+      // Play victory fanfare (wrapped in try-catch to prevent errors)
+      try { playVictoryFanfare(); } catch(e) {}
+
+      // Make boy very happy
+      boy.classList.remove('sad');
+      boy.classList.add('happy');
+      eyes.className = 'eyes happy';
+      mouth.className = 'mouth happy';
+      rightArm.classList.add('holding');
+
+      // Show success after animation
+      setTimeout(() => {
+        successScreen.classList.add('active');
+
+        // Floating hearts
+        for (let i = 0; i < 40; i++) {
+          setTimeout(createFloatingHeart, i * 80);
+        }
+        setInterval(() => {
+          for (let i = 0; i < 6; i++) {
+            createFloatingHeart();
+          }
+        }, 300);
+
+        // Confetti
+        for (let i = 0; i < 30; i++) {
+          setTimeout(createConfetti, i * 100);
+        }
+        setInterval(() => {
+          for (let i = 0; i < 5; i++) {
+            createConfetti();
+          }
+        }, 400);
+      }, 500);
+    }
+  </script>
+</body>
+</html>
