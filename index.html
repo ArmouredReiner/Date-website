@@ -931,13 +931,9 @@
 
   <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">♫ OFF</button>
 
-  <!-- YouTube Background Music (hidden) -->
-  <iframe id="youtubePlayer" width="1" height="1" style="position: absolute; opacity: 0;" 
-    src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
-
-  <!-- YouTube Victory Music (hidden) -->
-  <iframe id="victoryPlayer" width="1" height="1" style="position: absolute; opacity: 0;" 
-    src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+  <!-- YouTube Players (replaced by YouTube IFrame API) -->
+  <div id="youtubePlayer"></div>
+  <div id="victoryPlayer"></div>
 
   <!-- Main Card -->
   <div class="card">
@@ -1072,6 +1068,97 @@
     const MARIO_THEME_VIDEO_ID = 'NTa6Xbzfq1U';
     const VICTORY_VIDEO_ID = '3BsBXp6VkvU';
 
+    // YouTube IFrame API - load the API once
+    let ytApiLoaded = false;
+    let ytPlayer = null;
+    let victoryYtPlayer = null;
+
+    function loadYouTubeAPI() {
+      if (ytApiLoaded) return;
+      ytApiLoaded = true;
+
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    window.onYouTubeIframeAPIReady = function() {
+      // Create background music player
+      ytPlayer = new YT.Player('youtubePlayer', {
+        height: '1',
+        width: '1',
+        videoId: MARIO_THEME_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          loop: 1,
+          playlist: MARIO_THEME_VIDEO_ID,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function(event) {
+            event.target.setVolume(50);
+          }
+        }
+      });
+
+      // Create victory music player
+      victoryYtPlayer = new YT.Player('victoryPlayer', {
+        height: '1',
+        width: '1',
+        videoId: VICTORY_VIDEO_ID,
+        playerVars: {
+          autoplay: 1,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function(event) {
+            event.target.setVolume(70);
+          }
+        }
+      });
+    };
+
+    function toggleMusic() {
+      loadYouTubeAPI();
+      const btn = document.getElementById('musicBtn');
+
+      if (!isPlaying) {
+        isPlaying = true;
+        btn.textContent = '♫ ON';
+        btn.classList.add('playing');
+        if (ytPlayer && ytPlayer.playVideo) {
+          ytPlayer.playVideo();
+        }
+      } else {
+        isPlaying = false;
+        btn.textContent = '♫ OFF';
+        btn.classList.remove('playing');
+        if (ytPlayer && ytPlayer.pauseVideo) {
+          ytPlayer.pauseVideo();
+        }
+      }
+    }
+
+    function playVictoryFanfare() {
+      loadYouTubeAPI();
+      // Stop background music first
+      if (isPlaying && ytPlayer && ytPlayer.pauseVideo) {
+        ytPlayer.pauseVideo();
+      }
+      // Play victory music
+      if (victoryYtPlayer && victoryYtPlayer.playVideo) {
+        victoryYtPlayer.playVideo();
+      }
+    }
+
+    // Dead code - no longer used
     const notes = {
       C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00,
       A4: 440.00, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, G5: 784.00,
