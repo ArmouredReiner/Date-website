@@ -1033,6 +1033,61 @@
   </div>
 
   <script>
+    // YouTube IFrame API - MUST be defined before the API script loads
+    let ytPlayer = null;
+    let victoryYtPlayer = null;
+    let isPlayerReady = false;
+    let isVictoryPlayerReady = false;
+
+    window.onYouTubeIframeAPIReady = function() {
+      // Create background music player
+      ytPlayer = new YT.Player('youtubePlayer', {
+        height: '1',
+        width: '1',
+        videoId: 'NTa6Xbzfq1U',
+        playerVars: {
+          autoplay: 0,
+          loop: 1,
+          playlist: 'NTa6Xbzfq1U',
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function(event) {
+            isPlayerReady = true;
+            event.target.setVolume(50);
+          }
+        }
+      });
+
+      // Create victory music player
+      victoryYtPlayer = new YT.Player('victoryPlayer', {
+        height: '1',
+        width: '1',
+        videoId: '3BsBXp6VkvU',
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          disablekb: 1,
+          fs: 0,
+          modestbranding: 1
+        },
+        events: {
+          onReady: function(event) {
+            isVictoryPlayerReady = true;
+            event.target.setVolume(70);
+          }
+        }
+      });
+    };
+
+    // Load the YouTube IFrame API script
+    const ytScript = document.createElement('script');
+    ytScript.src = 'https://www.youtube.com/iframe_api';
+    document.head.appendChild(ytScript);
+
     // Create sparkles
     const sparkleContainer = document.getElementById('sparkleContainer');
     for (let i = 0; i < 50; i++) {
@@ -1059,111 +1114,7 @@
       grassArea.appendChild(blade);
     }
 
-    // Perfect - Ed Sheeran (musical instrumental version)
-    let audioContext = null;
     let isPlaying = false;
-    let melodyInterval = null;
-
-    // YouTube video IDs
-    const MARIO_THEME_VIDEO_ID = 'NTa6Xbzfq1U';
-    const VICTORY_VIDEO_ID = '3BsBXp6VkvU';
-
-    // YouTube IFrame API - load the API once
-    let ytApiLoaded = false;
-    let ytPlayer = null;
-    let victoryYtPlayer = null;
-
-    function loadYouTubeAPI() {
-      if (ytApiLoaded) return;
-      ytApiLoaded = true;
-
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
-
-    window.onYouTubeIframeAPIReady = function() {
-      // Create background music player
-      ytPlayer = new YT.Player('youtubePlayer', {
-        height: '1',
-        width: '1',
-        videoId: MARIO_THEME_VIDEO_ID,
-        playerVars: {
-          autoplay: 1,
-          loop: 1,
-          playlist: MARIO_THEME_VIDEO_ID,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1
-        },
-        events: {
-          onReady: function(event) {
-            event.target.setVolume(50);
-          }
-        }
-      });
-
-      // Create victory music player
-      victoryYtPlayer = new YT.Player('victoryPlayer', {
-        height: '1',
-        width: '1',
-        videoId: VICTORY_VIDEO_ID,
-        playerVars: {
-          autoplay: 1,
-          controls: 0,
-          disablekb: 1,
-          fs: 0,
-          modestbranding: 1
-        },
-        events: {
-          onReady: function(event) {
-            event.target.setVolume(70);
-          }
-        }
-      });
-    };
-
-    function toggleMusic() {
-      loadYouTubeAPI();
-      const btn = document.getElementById('musicBtn');
-
-      if (!isPlaying) {
-        isPlaying = true;
-        btn.textContent = '♫ ON';
-        btn.classList.add('playing');
-        if (ytPlayer && ytPlayer.playVideo) {
-          ytPlayer.playVideo();
-        }
-      } else {
-        isPlaying = false;
-        btn.textContent = '♫ OFF';
-        btn.classList.remove('playing');
-        if (ytPlayer && ytPlayer.pauseVideo) {
-          ytPlayer.pauseVideo();
-        }
-      }
-    }
-
-    function playVictoryFanfare() {
-      loadYouTubeAPI();
-      // Stop background music first
-      if (isPlaying && ytPlayer && ytPlayer.pauseVideo) {
-        ytPlayer.pauseVideo();
-      }
-      // Play victory music
-      if (victoryYtPlayer && victoryYtPlayer.playVideo) {
-        victoryYtPlayer.playVideo();
-      }
-    }
-
-    // Dead code - no longer used
-    const notes = {
-      C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00,
-      A4: 440.00, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, G5: 784.00,
-      G3: 196.00, A3: 220.00, B3: 246.94, E3: 164.81, F3: 174.61, D3: 146.83
-    };
 
     // Perfect - Ed Sheeran (musical instrumental version)
 
