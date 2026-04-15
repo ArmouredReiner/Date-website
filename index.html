@@ -935,6 +935,10 @@
   <iframe id="youtubePlayer" width="1" height="1" style="position: absolute; opacity: 0;" 
     src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
 
+  <!-- YouTube Victory Music (hidden) -->
+  <iframe id="victoryPlayer" width="1" height="1" style="position: absolute; opacity: 0;" 
+    src="" frameborder="0" allow="autoplay; encrypted-media"></iframe>
+
   <!-- Main Card -->
   <div class="card">
     <div class="glitter-heart">💖</div>
@@ -1063,6 +1067,10 @@
     let audioContext = null;
     let isPlaying = false;
     let melodyInterval = null;
+
+    // YouTube video IDs
+    const MARIO_THEME_VIDEO_ID = 'NTa6Xbzfq1U';
+    const VICTORY_VIDEO_ID = '3BsBXp6VkvU';
 
     const notes = {
       C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.00,
@@ -1410,26 +1418,25 @@
 
     function toggleMusic() {
       const btn = document.getElementById('musicBtn');
+      const player = document.getElementById('youtubePlayer');
       if (!isPlaying) {
-        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
         isPlaying = true;
         btn.textContent = '♫ ON';
         btn.classList.add('playing');
-        playPokemonTheme();
-        melodyInterval = setInterval(playPokemonTheme, 8000);
+        // Loop the Mario theme using YouTube embed
+        player.src = `https://www.youtube.com/embed/${MARIO_THEME_VIDEO_ID}?autoplay=1&loop=1&playlist=${MARIO_THEME_VIDEO_ID}`;
       } else {
         isPlaying = false;
         btn.textContent = '♫ OFF';
         btn.classList.remove('playing');
-        clearInterval(melodyInterval);
+        player.src = '';
       }
     }
 
-    // Pokemon Theme melody using Web Audio API
-    function playPokemonNote(frequency, duration, startTime, volume = 0.15) {
+    // Mario Theme melody using Web Audio API
+    function playMarioNote(frequency, duration, startTime, volume = 0.15) {
       if (!audioContext) return;
 
-      // Square wave for retro game sound
       const osc = audioContext.createOscillator();
       const gain = audioContext.createGain();
 
@@ -1448,68 +1455,103 @@
       osc.stop(startTime + duration + 0.1);
     }
 
-    // Pokemon Theme melody
-    function playPokemonTheme() {
+    // Mario Theme melody
+    function playMarioTheme() {
       if (!audioContext || !isPlaying) return;
       let time = audioContext.currentTime;
 
-      // Pokemon Theme - G5 opening, then bass line and melody
+      // Mario Theme - Overworld intro
       const melody = [
-        // Opening fanfare - G5
-        { freq: 783.99, duration: 0.2 },
-        { freq: 783.99, duration: 0.2 },
-        { freq: 783.99, duration: 0.2 },
-        { freq: 0, duration: 0.1 }, // rest
-        { freq: 783.99, duration: 0.15 },
-        { freq: 659.25, duration: 0.15 },
-        { freq: 783.99, duration: 0.2 },
+        // E5 E5 - quarter quarter
+        { freq: 659.25, duration: 0.2 },
+        { freq: 659.25, duration: 0.2 },
+        // E5 - quarter
+        { freq: 659.25, duration: 0.2 },
+        // C5 - quarter
+        { freq: 523.25, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.2 },
+        // rest - eighth
         { freq: 0, duration: 0.1 },
-        { freq: 880.00, duration: 0.3 },
-        { freq: 0, duration: 0.2 },
-
-        // Bass line
-        { freq: 196.00, duration: 0.2 },
-        { freq: 220.00, duration: 0.2 },
-        { freq: 246.94, duration: 0.2 },
-        { freq: 261.63, duration: 0.2 },
-
-        // Main melody phrase
-        { freq: 392.00, duration: 0.15 },
-        { freq: 440.00, duration: 0.15 },
-        { freq: 494.00, duration: 0.15 },
-        { freq: 523.25, duration: 0.15 },
-        { freq: 587.33, duration: 0.15 },
-        { freq: 523.25, duration: 0.15 },
-        { freq: 494.00, duration: 0.15 },
-        { freq: 440.00, duration: 0.15 },
+        // G4 - quarter (dotted)
+        { freq: 392.00, duration: 0.3 },
 
         // Second phrase
-        { freq: 392.00, duration: 0.15 },
-        { freq: 349.23, duration: 0.15 },
-        { freq: 392.00, duration: 0.15 },
-        { freq: 440.00, duration: 0.3 },
+        // E5 - quarter
+        { freq: 659.25, duration: 0.2 },
+        // rest - eighth
+        { freq: 0, duration: 0.1 },
+        // C5 - quarter
+        { freq: 523.25, duration: 0.2 },
+        // G4 - quarter
         { freq: 392.00, duration: 0.2 },
-
-        // Repeat fanfare
-        { freq: 783.99, duration: 0.2 },
-        { freq: 783.99, duration: 0.2 },
-        { freq: 783.99, duration: 0.2 },
+        // rest - eighth
         { freq: 0, duration: 0.1 },
-        { freq: 783.99, duration: 0.15 },
-        { freq: 659.25, duration: 0.15 },
-        { freq: 783.99, duration: 0.2 },
-        { freq: 0, duration: 0.1 },
-        { freq: 880.00, duration: 0.3 },
+        // G4 - quarter (dotted)
+        { freq: 392.00, duration: 0.3 },
 
-        // Final chord
-        { freq: 523.25, duration: 0.5 },
-        { freq: 659.25, duration: 0.5 },
-        { freq: 783.99, duration: 0.5 },
+        // Third phrase
+        // E5 - eighth
+        { freq: 659.25, duration: 0.1 },
+        // rest - eighth
+        { freq: 0, duration: 0.1 },
+        // C5 - quarter
+        { freq: 523.25, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.2 },
+        // D4 - quarter
+        { freq: 293.66, duration: 0.2 },
+        // B4 - quarter
+        { freq: 493.88, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.2 },
+        // A4 - quarter
+        { freq: 440.00, duration: 0.2 },
+        // B4 - quarter
+        { freq: 493.88, duration: 0.2 },
+        // A4 - quarter
+        { freq: 440.00, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.3 },
+
+        // Fourth phrase - "Mama mia!"
+        // E5 - eighth
+        { freq: 659.25, duration: 0.1 },
+        // rest - eighth
+        { freq: 0, duration: 0.05 },
+        // E5 - eighth
+        { freq: 659.25, duration: 0.1 },
+        // rest - eighth
+        { freq: 0, duration: 0.05 },
+        // E5 - quarter
+        { freq: 659.25, duration: 0.2 },
+        // C5 - quarter
+        { freq: 523.25, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.2 },
+        // rest - eighth
+        { freq: 0, duration: 0.1 },
+        // G4 - quarter (dotted)
+        { freq: 392.00, duration: 0.3 },
+
+        // Fifth phrase
+        // E5 - quarter
+        { freq: 659.25, duration: 0.2 },
+        // rest - eighth
+        { freq: 0, duration: 0.1 },
+        // C5 - quarter
+        { freq: 523.25, duration: 0.2 },
+        // G4 - quarter
+        { freq: 392.00, duration: 0.2 },
+        // rest - eighth
+        { freq: 0, duration: 0.1 },
+        // G4 - quarter (dotted)
+        { freq: 392.00, duration: 0.3 },
       ];
 
       melody.forEach(({ freq, duration }) => {
         if (freq > 0) {
-          playPokemonNote(freq, duration, time, 0.12);
+          playMarioNote(freq, duration, time, 0.12);
         }
         time += duration;
       });
@@ -1566,66 +1608,14 @@
     }
 
     function playVictoryFanfare() {
-      if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const time = audioContext.currentTime;
-
-      // Pokemon Victory Theme - iconic triumphant fanfare
-      // Notes: G5-G5-G5-E5-B-G5-E5-D5-G5 with specific timing
-      const victoryNotes = [
-        // First phrase - rising fanfare
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 659.25, duration: 0.3 },   // E5
-        { freq: 493.88, duration: 0.15 },  // B4
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 659.25, duration: 0.15 },  // E5
-        { freq: 587.33, duration: 0.3 },   // D5
-        { freq: 783.99, duration: 0.4 },   // G5
-
-        // Second phrase - triumphant repetition
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 659.25, duration: 0.3 },   // E5
-        { freq: 493.88, duration: 0.15 },  // B4
-        { freq: 783.99, duration: 0.15 },  // G5
-        { freq: 659.25, duration: 0.15 },  // E5
-        { freq: 587.33, duration: 0.3 },  // D5
-        { freq: 783.99, duration: 0.6 },  // G5
-
-        // Final triumphant chord
-        { freq: 1046.50, duration: 0.8 },  // C6
-      ];
-
-      victoryNotes.forEach(({ freq, duration }) => {
-        // Create triumphant brass sound
-        const harmonics = [
-          { vol: 0.40 }, { vol: 0.30 }, { vol: 0.20 },
-          { vol: 0.15 }, { vol: 0.10 }, { vol: 0.06 }
-        ];
-
-        harmonics.forEach(({ vol }, i) => {
-          const osc = audioContext.createOscillator();
-          const gain = audioContext.createGain();
-
-          osc.type = i === 0 ? 'sawtooth' : (i < 3 ? 'square' : 'triangle');
-          osc.frequency.setValueAtTime(freq * (i + 1), time);
-
-          gain.gain.setValueAtTime(0, time);
-          gain.gain.linearRampToValueAtTime(vol * 0.15, time + 0.02);
-          gain.gain.setValueAtTime(vol * 0.12, time + 0.05);
-          gain.gain.exponentialRampToValueAtTime(0.001, time + duration * 0.9);
-
-          osc.connect(gain);
-          gain.connect(audioContext.destination);
-
-          osc.start(time);
-          osc.stop(time + duration + 0.1);
-        });
-
-        time += duration;
-      });
+      const victoryPlayer = document.getElementById('victoryPlayer');
+      // Stop background music first
+      if (isPlaying) {
+        const bgPlayer = document.getElementById('youtubePlayer');
+        bgPlayer.src = '';
+      }
+      // Play victory music using YouTube embed
+      victoryPlayer.src = `https://www.youtube.com/embed/${VICTORY_VIDEO_ID}?autoplay=1`;
     }
 
     // No button messages
