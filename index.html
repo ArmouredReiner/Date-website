@@ -1412,8 +1412,8 @@
       const btn = document.getElementById('musicBtn');
       const iframe = document.getElementById('youtubePlayer');
       if (!isPlaying) {
-        // Load YouTube video as audio
-        iframe.src = "https://www.youtube.com/embed/VvjWl7lvrnk?autoplay=1&loop=1&playlist=VvjWl7lvrnk";
+        // Pokemon Theme music - XY animated series opening
+        iframe.src = "https://www.youtube.com/embed/JBzsbBleGME?autoplay=1&loop=1&playlist=JBzsbBleGME";
         isPlaying = true;
         btn.textContent = '♫ ON';
         btn.classList.add('playing');
@@ -1479,20 +1479,61 @@
       if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
       const time = audioContext.currentTime;
 
-      // Triumphant fanfare melody - trumpet style
-      const fanfare = [
-        { note: 'C5', duration: 0.25 }, { note: 'E5', duration: 0.25 },
-        { note: 'G5', duration: 0.35 }, { note: 'C5', duration: 0.1 },
-        { note: 'E5', duration: 0.2 }, { note: 'G5', duration: 0.3 },
-        { note: 'C6', duration: 0.7 }, { note: null, duration: 0.15 },
-        { note: 'G5', duration: 0.3 }, { note: 'C6', duration: 0.3 },
-        { note: 'G5', duration: 0.4 }, { note: 'C6', duration: 0.6 }
+      // Pokemon Victory Theme - iconic triumphant fanfare
+      // Notes: G5-G5-G5-E5-B-G5-E5-D5-G5 with specific timing
+      const victoryNotes = [
+        // First phrase - rising fanfare
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 659.25, duration: 0.3 },   // E5
+        { freq: 493.88, duration: 0.15 },  // B4
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 659.25, duration: 0.15 },  // E5
+        { freq: 587.33, duration: 0.3 },   // D5
+        { freq: 783.99, duration: 0.4 },   // G5
+
+        // Second phrase - triumphant repetition
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 659.25, duration: 0.3 },   // E5
+        { freq: 493.88, duration: 0.15 },  // B4
+        { freq: 783.99, duration: 0.15 },  // G5
+        { freq: 659.25, duration: 0.15 },  // E5
+        { freq: 587.33, duration: 0.3 },  // D5
+        { freq: 783.99, duration: 0.6 },  // G5
+
+        // Final triumphant chord
+        { freq: 1046.50, duration: 0.8 },  // C6
       ];
 
-      fanfare.forEach(({ note, duration }) => {
-        if (note && notes[note]) {
-          createTrumpetNote(notes[note], duration, time, 0.3);
-        }
+      victoryNotes.forEach(({ freq, duration }) => {
+        // Create triumphant brass sound
+        const harmonics = [
+          { vol: 0.40 }, { vol: 0.30 }, { vol: 0.20 },
+          { vol: 0.15 }, { vol: 0.10 }, { vol: 0.06 }
+        ];
+
+        harmonics.forEach(({ vol }, i) => {
+          const osc = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+
+          osc.type = i === 0 ? 'sawtooth' : (i < 3 ? 'square' : 'triangle');
+          osc.frequency.setValueAtTime(freq * (i + 1), time);
+
+          gain.gain.setValueAtTime(0, time);
+          gain.gain.linearRampToValueAtTime(vol * 0.15, time + 0.02);
+          gain.gain.setValueAtTime(vol * 0.12, time + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, time + duration * 0.9);
+
+          osc.connect(gain);
+          gain.connect(audioContext.destination);
+
+          osc.start(time);
+          osc.stop(time + duration + 0.1);
+        });
+
         time += duration;
       });
     }
